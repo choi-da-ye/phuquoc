@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>푸꾸옥 여행 가이드</title>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/pretendard@5.2.5/index.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        body {
+            background-color: #F0F4F8; /* Light blue/grey background */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px; /* Slightly wider container */
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1549445100-36b6d510a2d2?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0; /* Remove bottom margin here, filter bar will handle spacing */
+        }
+
+        .header h1 {
+            font-size: 3.2em; /* Larger title */
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            font-weight: 300; /* Lighter font weight */
+            opacity: 0.9;
+        }
+
+        .header span {
+            font-size: 1.3em; /* Smaller title above main H1 */
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .filter-bar {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            margin-top: -40px; /* Overlap with header */
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background: #eee;
+            color: #555;
+            padding: 10px 25px;
+            border-radius: 25px; /* More rounded */
+            margin: 0 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, color 0.3s;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #4682b4; /* Blue accent color */
+            color: white;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px; /* More rounded corners */
+            padding: 40px; /* More padding */
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* More prominent shadow */
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 2.0em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: none; /* Remove bottom border */
+            padding-bottom: 0;
+        }
+
+        .content-block {
+            display: block; /* Change from flex to block */
+            margin-bottom: 40px; /* Slightly reduced margin */
+        }
+
+        .content-block:nth-child(even) {
+            flex-direction: none; /* Remove alternating direction */
+        }
+
+        .text-side {
+            flex: none; /* Remove flex property */
+            padding: 0; /* Remove padding */
+        }
+
+        .text-side h3 {
+            font-size: 1.6em;
+            color: #4682b4; /* Blue for subheadings */
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .text-side p {
+            font-size: 1.0em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.0em;
+            color: #444;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            color: #27ae60;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .day-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .day-card h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .day-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .day-card li {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .tips-block {
+            margin-bottom: 30px;
+        }
+
+        .tips-block h3 {
+            font-size: 1.4em;
+            color: #2980b9;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .tips-block p {
+            font-size: 1.0em;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .shopping-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .shopping-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .shopping-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .shopping-item .checklist {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .shopping-item .checklist li {
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            .header p {
+                font-size: 0.9em;
+            }
+            .header span {
+                font-size: 1.0em;
+            }
+
+            .filter-bar {
+                flex-wrap: wrap;
+                padding: 10px;
+            }
+            .filter-btn {
+                margin: 5px;
+                padding: 8px 18px;
+            }
+
+            .content-block {
+                flex-direction: column; /* Stack on mobile */
+                margin-bottom: 40px;
+            }
+            .content-block:nth-child(even) {
+                flex-direction: column; /* Keep stacked */
+            }
+
+            .day-card{
+                padding: 0;
+            }
+
+            .img-side,
+            .text-side {
+                flex: 1;
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            .img-side {
+                margin-bottom: 20px;
+            }
+
+            .section {
+                padding: 25px;
+            }
+            .section h2 {
+                font-size: 1.6em;
+                margin-bottom: 30px;
+            }
+            .text-side h3 {
+                font-size: 1.3em;
+            }
+            .text-side p {
+                font-size: 0.95em;
+            }
+
+            .schedule-grid, .shopping-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>푸꾸옥 여행 프로젝트</span>
+        <h1>푸꾸옥 여행 가이드</h1>
+        <p>환상적인 베트남 푸꾸옥으로 떠나는 2박 3일</p>
+    </div>
+
+    <div class="filter-bar">
+        <a href="#schedule" class="filter-btn active">일정</a>
+        <a href="#essentials" class="filter-btn">필수 준비물</a>
+        <a href="#tips" class="filter-btn">현지 팁</a>
+        <a href="#shopping" class="filter-btn">쇼핑 가이드</a>
+    </div>
+
+    <div class="container">
+        <section id="schedule" class="section">
+            <h2>여행 일정 요약</h2>
+            <div class="schedule-grid">
+                <div class="day-card">
+                    <h3>1일차 (6/14 금)</h3>
+                    <ul>
+                        <li>오전 5:00 인천 출발</li>
+                        <li>오전 8:25 푸꾸옥 도착 & 이심 구매</li>
+                        <li>숙소 이동 및 짐 보관</li>
+                        <li>수영장 또는 해변에서 휴식</li>
+                        <li>저녁: 해산물 맛집 또는 야시장</li>
+                    </ul>
+                </div>
+                <div class="day-card">
+                    <h3>2일차 (6/15 토)</h3>
+                    <ul>
+                        <li>호텔 조식</li>
+                        <li>혼섬 투어/스노클링 또는 빈펄 리조트 방문</li>
+                        <li>낮에는 수영장, 마사지 또는 스파</li>
+                        <li>저녁: 바다 전망 레스토랑 또는 야시장</li>
+                    </ul>
+                </div>
+                <div class="day-card">
+                    <h3>3일차 (6/16 일)</h3>
+                    <ul>
+                        <li>아침 수영 또는 산책</li>
+                        <li>브런치 즐기기</li>
+                        <li>기념품 쇼핑</li>
+                        <li>오후 17:55 푸꾸옥 출발</li>
+                        <li>6/17(월) 오전 1:10 인천 도착</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="essentials" class="section">
+            <h2>필수 준비물 체크리스트</h2>
+            <div class="content-block">
+                <div class="text-side">
+                    <h3>여행 서류 및 금융</h3>
+                    <ul class="checklist">
+                        <li>여권 (만료일 6개월 이상 필수)</li>
+                        <li>항공권 및 숙소 바우처 (앱 또는 출력본)</li>
+                        <li>트래블월렛 앱 설치 및 환전 완료, 실물 카드 소지</li>
+                        <li>여행자 보험 확인 (카드사 포함 여부)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="text-side">
+                    <h3>개인 위생용품 및 건강</h3>
+                    <ul class="checklist">
+                        <li>샤워기 필터, 칫솔, 치약</li>
+                        <li>썬크림, 선글라스, 모자</li>
+                        <li>상비약 (배탈약 필수), 물티슈, 손소독제</li>
+                        <li>우산 또는 휴대용 우비, 방수 파우치</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="text-side">
+                    <h3>의류 및 전자기기</h3>
+                    <ul class="checklist">
+                        <li>수영복, 슬리퍼, 편안한 운동화</li>
+                        <li>2박 3일치 여벌 옷, 속옷, 양말, 파자마</li>
+                        <li>충전기, 보조배터리, 에어팟</li>
+                        <li>방수팩 (휴대폰 방수 필수)</li>
+                        <li>이심(eSIM) 사전 구매 또는 현지 공항 구매</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips" class="section">
+            <h2>현지 팁 & 주의사항</h2>
+            <div class="tips-block">
+                <h3>날씨 및 복장</h3>
+                <p>6월 푸꾸옥은 덥고 습하며 소나기가 잦습니다. 우산보다는 휴대하기 편한 우비나 방수 파우치를 추천합니다. 통기성 좋은 가벼운 옷차림과 편안한 신발을 준비하세요.</p>
+            </div>
+
+            <div class="tips-block">
+                <h3>교통 정보</h3>
+                <p>현지에서는 Grab 앱을 필수적으로 사용하는 것이 좋습니다. 현지 택시보다 저렴하고 안전하게 이동할 수 있습니다. 오토바이 택시도 이용 가능합니다.</p>
+            </div>
+
+            <div class="tips-block">
+                <h3>현금/카드 사용</h3>
+                <p>트래블월렛을 통한 환전은 편리하지만, 시장이나 소규모 식당에서는 카드를 받지 않는 경우가 많으므로 소액 현금(VND)을 꼭 챙기세요. 공항에서 소액 환전하는 것도 좋은 방법입니다.</p>
+            </div>
+
+            <div class="tips-block">
+                <h3>물 및 위생</h3>
+                <p>생수를 구매하여 마시는 것을 권장하며, 칫솔질 시에도 생수를 사용하는 것이 안전합니다. 위생에 민감하다면 개인 샤워기 필터를 챙기는 것이 좋습니다.</p>
+            </div>
+
+            <div class="tips-block">
+                <h3>팁 문화</h3>
+                <p>베트남은 팁 문화가 보편화되어 있지 않지만, 레스토랑이나 마사지샵 등 서비스업에서는 만족스러운 서비스에 약간의 팁을 주는 것이 매너로 여겨집니다.</p>
+            </div>
+        </section>
+
+        <section id="shopping" class="section">
+            <h2>쇼핑 가이드</h2>
+            <div class="shopping-list">
+                <div class="shopping-item">
+                    <h4>킹콩마트 필수템</h4>
+                    <ul class="checklist">
+                        <li>마기소스 (베트남 간장)</li>
+                        <li>체리쉬 망고푸딩</li>
+                        <li>커피조이 쿠키</li>
+                        <li>하오하오라면 (다양한 맛)</li>
+                        <li>달리 치약, 쥐포 등 현지 인기 상품</li>
+                    </ul>
+                </div>
+                <div class="shopping-item">
+                    <h4>현지 특산물 및 기념품</h4>
+                    <ul class="checklist">
+                        <li>푸꾸옥 진주 (유명)</li>
+                        <li>후추 (세계 3대 후추 산지)</li>
+                        <li>피쉬 소스 (느억맘)</li>
+                        <li>베트남 커피 (G7, 쭝응우옌 등)</li>
+                        <li>열대과일 (망고, 망고스틴 등)</li>
+                        <li>수공예품, 아오자이 등</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
